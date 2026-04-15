@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ماكينة TREE لكتابة المحتوى</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            background-color: #fff;
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-top: 5px solid #2e7d32; /* لون شجرة TREE */
+        }
+        h2 {
+            text-align: center;
+            color: #2e7d32;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #1b5e20;
+        }
+        .result-box {
+            margin-top: 25px;
+            display: none;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            border: 1px solid #2e7d32;
+            border-radius: 6px;
+            font-size: 15px;
+            line-height: 1.5;
+            resize: none;
+            box-sizing: border-box;
+        }
+        .copy-btn {
+            background-color: #0277bd;
+            margin-top: 10px;
+        }
+        .copy-btn:hover {
+            background-color: #01579b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>🌳 مولد محتوى منتجات TREE</h2>
+        
+        <div class="form-group">
+            <label for="productType">نوع المنتج (مثال: تيشيرت بولو، بنطلون جينز)</label>
+            <input type="text" id="productType" placeholder="اكتب نوع المنتج...">
+        </div>
+
+        <div class="form-group">
+            <label for="material">الخامة (مثال: قطن بيكيه، كتان مريح)</label>
+            <input type="text" id="material" placeholder="اكتب خامة المنتج...">
+        </div>
+
+        <div class="form-group">
+            <label for="color">اللون</label>
+            <input type="text" id="color" placeholder="اكتب لون المنتج...">
+        </div>
+
+        <div class="form-group">
+            <label for="platform">المنصة المستهدفة</label>
+            <select id="platform">
+                <option value="shopify">شوبيفاي (Shopify) - وصف تفصيلي</option>
+                <option value="jumia">جوميا (Jumia) - SEO و ميزات</option>
+                <option value="noon">نون (Noon) - نقاط سريعة</option>
+            </select>
+        </div>
+
+        <button onclick="generateContent()">⚙️ إنشاء المحتوى</button>
+
+        <div class="result-box" id="resultBox">
+            <label>المحتوى الجاهز:</label>
+            <textarea id="outputText" readonly></textarea>
+            <button class="copy-btn" onclick="copyText()">📋 نسخ المحتوى</button>
+        </div>
+    </div>
+
+    <script>
+        function generateContent() {
+            // سحب البيانات من المربعات
+            let type = document.getElementById("productType").value || "[نوع المنتج]";
+            let material = document.getElementById("material").value || "[الخامة]";
+            let color = document.getElementById("color").value || "[اللون]";
+            let platform = document.getElementById("platform").value;
+            
+            let result = "";
+
+            // توليد المحتوى حسب المنصة
+            if (platform === "shopify") {
+                result = `${type} من TREE | أناقة وراحة بلون ${color}\n\nارتقِ بإطلالتك مع ${type} المتميز من كوليكشن TREE الأصلي. مصمم خصيصاً ليمنحك الراحة طوال اليوم بفضل خامة الـ ${material} عالية الجودة.\n\n✨ الميزات:\n- خامة ناعمة ومريحة جداً تناسب الاستخدام اليومي.\n- لون ${color} غني وثابت معالج ضد البهتان.\n- قصة عصرية (Regular Fit) تبرز أناقة الجسم.\n\n📏 تنبيه: برجاء مراجعة جدول المقاسات قبل الطلب.`;
+            } 
+            else if (platform === "jumia") {
+                result = `العنوان: TREE ${type} كاجوال رجالي - ${material} - ${color}\n\nأبرز الميزات (Highlights):\n- العلامة التجارية: TREE الأصلية\n- الخامة: ${material} عالي الجودة\n- اللون: ${color} ثابت\n- الميزة: تلبيس مريح وعملي\n\nوصف المنتج (Description):\nاحصل على أفضل تجربة تسوق مع ${type} من TREE. مصنوع من ${material} ليناسب الاستخدام اليومي والخروجات. متوفر بلون ${color} الجذاب الذي يسهل تنسيقه مع مختلف إطلالاتك.`;
+            } 
+            else if (platform === "noon") {
+                result = `العنوان: ${type} كاجوال بأسلوب عصري ${color}\n\nنظرة عامة:\n- مصمم من ${material} ليوفر أقصى درجات الراحة وحرية الحركة.\n- ياقة كلاسيكية وتصميم يناسب أوقات العمل والخروجات اليومية.\n- لون ${color} أنيق يسهل تنسيقه مع مختلف الإطلالات.\n- منتج أصلي 100% من مصانع TREE يضمن لك الجودة والعمر الطويل.`;
+            }
+
+            // عرض النتيجة
+            document.getElementById("outputText").value = result;
+            document.getElementById("resultBox").style.display = "block";
+        }
+
+        function copyText() {
+            let text = document.getElementById("outputText");
+            text.select();
+            text.setSelectionRange(0, 99999); /* للموبايل */
+            navigator.clipboard.writeText(text.value);
+            alert("✅ تم نسخ المحتوى بنجاح! تقدر تعمله لصق دلوقتي.");
+        }
+    </script>
+</body>
+</html>
