@@ -1,122 +1,479 @@
-/**
- * TREE WMS Enterprise Presentation Pipeline
- * Developer: [معتز محمد]
- * Target Audience: TREE Company Chairman (رئيس مجلس الإدارة)
- * Goal: Impress Chairman, Deploy WMS, and Request Promotion/Raise
- */
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TREE WMS - العرض التقديمي لمجلس الإدارة</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', 'Outfit', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow: hidden;
+        }
+        .slide {
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateX(100px);
+            pointer-events: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+        .slide.past {
+            opacity: 0;
+            transform: translateX(-100px);
+            pointer-events: none;
+        }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .highlight-box {
+            border-right: 4px solid #10b981;
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col justify-between p-4 md:p-8 relative">
 
-async function executePresentation() {
-    try {
-        // =====================================================================
-        // PHASE 1: INITIALIZATION & HOOK (المقدمة وشد الانتباه)
-        // =====================================================================
-        setBodyLanguage({ posture: "straight", eyeContact: "direct", smile: true });
-        setToneOfVoice("confident_and_clear");
+    <!-- Top Bar -->
+    <header class="flex items-center justify-between border-b border-slate-800 pb-4 z-50">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-900/30">
+                <span class="text-white font-black text-lg">T</span>
+            </div>
+            <div>
+                <h1 class="font-extrabold text-slate-100 text-sm tracking-wide">TREE WMS PROPOSAL</h1>
+                <p class="text-[10px] text-emerald-400 font-bold">نظام اللوجستيات والمخازن الذكي</p>
+            </div>
+        </div>
+        
+        <!-- Progress Indicator -->
+        <div class="flex items-center gap-2">
+            <div class="h-2 w-48 bg-slate-800 rounded-full overflow-hidden hidden md:block">
+                <div id="progress-bar" class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-300" style="width: 16.66%;"></div>
+            </div>
+            <span id="slide-index" class="text-xs font-mono font-bold text-slate-400">1 / 6</span>
+        </div>
+    </header>
 
-        say(`
-            مساء الخير يا فندم. حابب أبدأ عرضي بسؤال سريع: 
-            إحنا في شركة TREE عشان نكبر ونزود مبيعاتنا، إيه أكتر عائق بيقابلنا في العمليات؟ 
-            هما مشكلتين رئيسيتين: الوقت الضايع في العمليات اليدوية، وعجز المخزون بالفروع.
-            عشان كدة، أنا برمجت وصممت بنية تحتية برمجية كاملة للشركة باسم TREE WMS.
-        `);
+    <!-- Main Slide Container -->
+    <main class="flex-1 relative my-6 overflow-hidden">
 
-        await sleep(1500); // وقت لالتقاط الأنفاس ومراقبة رد فعله
+        <!-- Slide 1: Welcome & Intro -->
+        <div class="slide active flex flex-col lg:flex-row gap-6 h-full items-center justify-center" data-index="1">
+            <!-- Left Pane: Presentation Script & Teleprompter -->
+            <div class="w-full lg:w-1/2 h-full flex flex-col justify-center space-y-6 lg:pr-8">
+                <div class="bg-amber-500/10 text-amber-300 border border-amber-500/20 px-4 py-2 rounded-xl text-xs font-bold w-fit">
+                    📢 المقدمة وجذب انتباه رئيس مجلس الإدارة
+                </div>
+                
+                <div class="space-y-2">
+                    <h2 class="text-3xl font-black text-white leading-tight">مستقبل اللوجستيات في TREE</h2>
+                    <p class="text-slate-400 text-xs font-medium">ابدأ العرض بنبرة هادئة وثقة عالية جداً.</p>
+                </div>
 
-        // =====================================================================
-        // PHASE 2: AUTOMATION MODULE (أتمتة شوبيفاي والشحن)
-        // =====================================================================
-        const shopifyAPI = true;
-        const shippingAPIs = ["Aramex", "Bosta"];
+                <div class="glass-panel p-6 rounded-2xl space-y-4 highlight-box">
+                    <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-widest">السيناريو المقروء (ما ستقوله):</h3>
+                    <p class="text-slate-200 text-base md:text-lg leading-relaxed font-bold">
+                        "مساء الخير يا فندم. حابب أبدأ عرضي النهاردة بسؤال سريع بيشغل بال أي صاحب عمل ناجح: 
+                        إحنا في شركة TREE عشان نكبر ونزود حصتنا في السوق، إيه أكتر عائقين بيعطلوا سرعة نمونا؟ 
+                        هما مشكلتين رئيسيتين: الوقت الضخم الضائع في العمليات اللوجستية اليدوية، وعجز المخزن بالفروع.
+                        عشان كدة، أنا برمجت وصممت بنية تحتية تقنية كاملة ومخصصة لشركتنا باسم 'TREE WMS'."
+                    </p>
+                </div>
 
-        if (shopifyAPI && shippingAPIs.length > 0) {
-            showSlide("Shopify & Shipping API Integration");
-            say(`
-                أول ميزة برمجتها هي الربط المباشر مع Shopify وشركات الشحن. 
-                الموظف كان بيضيع ساعات عشان ينقل الطلبات يدوي ويطبع بوالص الشحن. 
-                دلوقتي، بضغطة زر واحدة، الطلب بيروح لشركة الشحن، البوليصة بتطبع فوراً، 
-                والرصيد بيتحدث تلقائياً. حولنا العمل من ساعات إلى ثواني، بنسبة خطأ 0%.
-            `);
+                <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 text-xs text-slate-400 space-y-1">
+                    <span class="font-bold text-purple-400">💡 حركة جسدك:</span> قف مستقيماً، تواصل بصرياً بنسبة 100% مع رئيس مجلس الإدارة، وابدأ بابتسامة تدل على الحماس للمستقبل.
+                </div>
+            </div>
+            
+            <!-- Right Pane: Interactive Mockup/Visual -->
+            <div class="w-full lg:w-1/2 h-full flex items-center justify-center p-4">
+                <div class="bg-gradient-to-br from-emerald-950/40 to-slate-950 border border-slate-800 rounded-3xl p-8 w-full max-w-lg shadow-2xl relative overflow-hidden">
+                    <div class="absolute -top-12 -left-12 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl"></div>
+                    <h3 class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 tracking-tight mb-2">TREE WMS</h3>
+                    <p class="text-emerald-400 font-extrabold text-sm mb-6">Warehouse Management & Integration Hub</p>
+                    <div class="space-y-3 font-mono text-xs text-slate-400">
+                        <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
+                            <span>Database Connection:</span>
+                            <span class="text-emerald-500 font-bold">ACTIVE (Supabase PostgreSQL)</span>
+                        </div>
+                        <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
+                            <span>Integrations:</span>
+                            <span class="text-teal-400 font-bold">Shopify, Bosta, Aramex</span>
+                        </div>
+                        <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
+                            <span>Security:</span>
+                            <span class="text-indigo-400 font-bold">Row-Level Security (RLS)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Shopify & Shipping -->
+        <div class="slide flex flex-col lg:flex-row gap-6 h-full items-center justify-center" data-index="2">
+            <!-- Left Pane -->
+            <div class="w-full lg:w-1/2 h-full flex flex-col justify-center space-y-6 lg:pr-8">
+                <div class="bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 px-4 py-2 rounded-xl text-xs font-bold w-fit">
+                    ⚙️ محور الأتمتة والربط الخارجي
+                </div>
+                
+                <div class="space-y-2">
+                    <h2 class="text-3xl font-black text-white leading-tight">أتمتة الطلبات والشحن الذكي</h2>
+                    <p class="text-slate-400 text-xs font-medium">تحدث بنبرة سريعة وحاسمة تعبر عن الكفاءة والسرعة العملية.</p>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl space-y-4 highlight-box">
+                    <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-widest">السيناريو المقروء (ما ستقوله):</h3>
+                    <p class="text-slate-200 text-base md:text-lg leading-relaxed font-bold">
+                        "أول ميزة برمجتها هي الربط البرمجي اللحظي (APIs) مع Shopify وأكبر شركات الشحن (أرامكس وبوستا).
+                        الأول، الموظف كان بيضيع ساعات عشان ينقل الأوردرات يدوي لشركات الشحن، وده بيسبب أخطاء شحن وتأخير.
+                        دلوقتي، بضغطة زر واحدة: الطلب بيتبعت لشركة الشحن فوراً، البوليصة بتطبع في ثانية، وأرصدة المنتجات بتتحدث لحظياً في السيرفر لمنع البيع الزائد. حولنا العمل من ساعات لثواني معدودة بنسبة خطأ 0%."
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 text-xs text-slate-400 space-y-1">
+                    <span class="font-bold text-purple-400">💡 حركة جسدك:</span> أشر بيدك اليمنى نحو شاشة العرض بثقة، ووزع نظرك بين اللوحة المعروضة وبين رئيس مجلس الإدارة.
+                </div>
+            </div>
+            
+            <!-- Right Pane: Shopify Integration Mockup -->
+            <div class="w-full lg:w-1/2 h-full flex items-center justify-center p-4">
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full max-w-md shadow-2xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <span class="font-bold text-xs text-slate-300">محاكي عملية شحن سريعة (APIs)</span>
+                        <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded text-[10px] font-bold">تكامل نشط</span>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="bg-slate-950 p-3 rounded-lg flex items-center justify-between text-xs">
+                            <span class="text-slate-400">طلب شوبيفاي الوارد:</span>
+                            <span class="font-mono text-slate-200 font-bold">#TREE-1029</span>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-lg flex items-center justify-between text-xs">
+                            <span class="text-slate-400">شركة الشحن المختارة:</span>
+                            <span class="text-teal-400 font-bold">BOSTA (بوستا مصر)</span>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-lg flex items-center justify-between text-xs">
+                            <span class="text-slate-400">رقم البوليصة المولد:</span>
+                            <span class="font-mono text-indigo-400 font-bold">BST-98742-EG</span>
+                        </div>
+                    </div>
+                    <div class="bg-emerald-950/20 border border-emerald-800/30 p-3 rounded-lg text-[10px] text-emerald-400 font-semibold text-center">
+                        ⚡ تم إرسال الشحنة لشركة الشحن وتوليد البوليصة تلقائياً خلال 0.8 ثانية!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Smart Replenishment -->
+        <div class="slide flex flex-col lg:flex-row gap-6 h-full items-center justify-center" data-index="3">
+            <!-- Left Pane -->
+            <div class="w-full lg:w-1/2 h-full flex flex-col justify-center space-y-6 lg:pr-8">
+                <div class="bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 px-4 py-2 rounded-xl text-xs font-bold w-fit">
+                    💡 الذكاء اللوجستي وحركة البضائع
+                </div>
+                
+                <div class="space-y-2">
+                    <h2 class="text-3xl font-black text-white leading-tight">تنبيهات النواقص والراكد الفورية</h2>
+                    <p class="text-slate-400 text-xs font-medium">تحدث بنبرة حماسية تعبر عن زيادة فرص البيع وتشغيل الكاش فلو.</p>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl space-y-4 highlight-box">
+                    <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-widest">السيناريو المقروء (ما ستقوله):</h3>
+                    <p class="text-slate-200 text-base md:text-lg leading-relaxed font-bold">
+                        "السيستم مبرمج جواه خوارزمية ذكية لمراقبة الفروع. لو منتج نزل عن حد الأمان بالفرع، 
+                        والسيستم لقى منه فائض في مخزن أبيس الرئيسي أو فروع تانية، بيبعت تنبيه فوري واقتراح تحويل سريع. 
+                        ده معناه: مفيش زبون هيدخل فرع لـ TREE وهيسمع كلمة 'المنتج مخلص'.
+                        وفي نفس الوقت، برمجت 'محلل البضاعة الراكدة' (Dead Stock) بيكشف المنتجات المركونة في الفروع 
+                        وما بتتباعش، عشان نسحبها لأبيس ونعيد توزيعها لتشغيل رأس المال المركون."
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 text-xs text-slate-400 space-y-1">
+                    <span class="font-bold text-purple-400">💡 حركة جسدك:</span> استخدم لغة الإشارة واليدين لشرح كيفية تدوير رأس المال وسحب البضائع الميتة لإعادة استثمارها.
+                </div>
+            </div>
+            
+            <!-- Right Pane: Replenish Table Mockup -->
+            <div class="w-full lg:w-1/2 h-full flex items-center justify-center p-4">
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 w-full max-w-md shadow-2xl space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                        <span class="font-bold text-xs text-slate-300">مراقب النواقص وإعادة التوزيع</span>
+                        <span class="bg-indigo-500/10 text-indigo-400 text-[10px] font-bold px-2 py-0.5 rounded">الحد: &lt; 3 قطع</span>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="bg-slate-950 p-3 rounded-lg flex items-center justify-between text-xs font-semibold">
+                            <div>
+                                <div class="text-slate-200">سويت شيرت كاجوال</div>
+                                <div class="text-[9px] text-slate-500">6223002548742</div>
+                            </div>
+                            <div class="text-left">
+                                <div class="text-rose-400">فرع سموحة: قطعة واحدة ⚠️</div>
+                                <div class="text-emerald-400">مخزن أبيس: 45 قطعة</div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-lg flex items-center justify-between text-xs font-semibold">
+                            <div>
+                                <div class="text-slate-200">بنطلون جينز كلاسيك</div>
+                                <div class="text-[9px] text-slate-500">6223002548788</div>
+                            </div>
+                            <div class="text-left">
+                                <div class="text-rose-400">فرع لوران: 2 قطعة ⚠️</div>
+                                <div class="text-emerald-400">مخزن أبيس: 32 قطعة</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold transition shadow-lg shadow-indigo-900/30">
+                        ⚡ معالجة وإجراء تحويلات سريعة فوراً
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Live Store Audit -->
+        <div class="slide flex flex-col lg:flex-row gap-6 h-full items-center justify-center" data-index="4">
+            <!-- Left Pane -->
+            <div class="w-full lg:w-1/2 h-full flex flex-col justify-center space-y-6 lg:pr-8">
+                <div class="bg-amber-500/10 text-amber-300 border border-amber-500/20 px-4 py-2 rounded-xl text-xs font-bold w-fit">
+                    🎯 ديمو الجرد الدوري الفوري للفروع
+                </div>
+                
+                <div class="space-y-2">
+                    <h2 class="text-3xl font-black text-white leading-tight">مكافحة العجز ومطابقة المخازن</h2>
+                    <p class="text-slate-400 text-xs font-medium">تحدث بنبرة هادئة تشرح الخطوات بوضوح شديد وثقة تامة.</p>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl space-y-4 highlight-box">
+                    <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-widest">السيناريو المقروء (ما ستقوله):</h3>
+                    <p class="text-slate-200 text-base md:text-lg leading-relaxed font-bold">
+                        "ودلوقتي يا فندم، حابب أوري حضرتك عملياً أهم ميزة بتحمي أرباح TREE.. نظام الجرد والمطابقة الفوري. 
+                        الموظف بيمسح الباركود، والسيستم بيعمل حفظ مسودة تلقائي كل ثانيتين في السحاب عشان لو الكهرباء قطعت الشغل ما يضيعش. 
+                        بمجرد ما الموظف بيقفل الجرد، السيستم بيطابق الأرقام برصيد الداتا بيز ويحسب الفروقات فوراً. 
+                        العجز بيبان بالقطعة، والزيادة بتبان بالقطعة. وحضرتك كمدير بضغطة زر بتعتمد التسوية وتحدث المخزون الفعلي، وده بيقفل الباب تماماً أمام أي تلاعب في الفروع."
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 text-xs text-slate-400 space-y-1">
+                    <span class="font-bold text-purple-400">💡 حركة جسدك:</span> امسك موبايلك الخاص، واعرض عليه شاشة الجرد الدوري الفعلي ليرى عملية المسح وتحديث الأرقام اللحظية.
+                </div>
+            </div>
+            
+            <!-- Right Pane: Audit Scanning UI Mockup -->
+            <div class="w-full lg:w-1/2 h-full flex items-center justify-center p-4">
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 w-full max-w-md shadow-2xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                        <span class="font-bold text-xs text-slate-300">مساحة الجرد والمسح النشط</span>
+                        <span class="bg-amber-500/10 text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded">حفظ تلقائي للمسودة 🔄</span>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex gap-2">
+                            <input type="text" value="6223002548742" class="bg-slate-950 border border-slate-800 text-xs px-3 py-2 rounded-lg text-slate-300 flex-1 font-mono" readonly>
+                            <button class="bg-emerald-600 px-4 py-2 rounded-lg text-xs font-bold text-white">إضافة</button>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-lg text-xs flex items-center justify-between">
+                            <div>
+                                <span class="font-bold text-slate-200">سويت شيرت كاجوال</span>
+                                <div class="text-[9px] text-slate-500 font-mono">6223002548742</div>
+                            </div>
+                            <span class="font-extrabold text-emerald-400">12 قطعة ممسوحة</span>
+                        </div>
+                    </div>
+                    <div class="border-t border-slate-800 pt-3 flex gap-2">
+                        <button class="flex-1 py-2 bg-rose-600/20 hover:bg-rose-600/30 text-rose-400 rounded-lg text-xs font-bold border border-rose-500/20">حفظ مسودة</button>
+                        <button class="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold">تقديم وحساب الفروقات</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Security & RLS -->
+        <div class="slide flex flex-col lg:flex-row gap-6 h-full items-center justify-center" data-index="5">
+            <!-- Left Pane -->
+            <div class="w-full lg:w-1/2 h-full flex flex-col justify-center space-y-6 lg:pr-8">
+                <div class="bg-purple-500/10 text-purple-300 border border-purple-500/20 px-4 py-2 rounded-xl text-xs font-bold w-fit">
+                    🔒 أمان النظام وحماية الأصول
+                </div>
+                
+                <div class="space-y-2">
+                    <h2 class="text-3xl font-black text-white leading-tight">عزل صلاحيات البيانات (RLS)</h2>
+                    <p class="text-slate-400 text-xs font-medium">تحدث بنبرة جادة وحاسمة تدل على الأمان والمسؤولية التامة.</p>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl space-y-4 highlight-box">
+                    <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-widest">السيناريو المقروء (ما ستقوله):</h3>
+                    <p class="text-slate-200 text-base md:text-lg leading-relaxed font-bold">
+                        "وعشان بيانات TREE سرية وآمنة، طبقت نظام أمني صارم ومحكم على مستوى قاعدة البيانات (Row Level Security - RLS).
+                        الموظف في فرع سموحة مستحيل يقدر يقرأ أو يعدل بيانات فرع لوران أو يشوف عمليات شوبيفاي، 
+                        وتم عزل الصلاحيات بالكامل. 
+                        كل موظف بيشوف شغله فقط، وحضرتك كإدارة بتشوف الصورة الكاملة."
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 text-xs text-slate-400 space-y-1">
+                    <span class="font-bold text-purple-400">💡 حركة جسدك:</span> قف بثبات وتواصل بصرياً بنظرة جدية تدل على الأمان الفني الكامل.
+                </div>
+            </div>
+            
+            <!-- Right Pane: Security Policy Visual -->
+            <div class="w-full lg:w-1/2 h-full flex items-center justify-center p-4">
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full max-w-md shadow-2xl space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center">
+                            🔒
+                        </div>
+                        <span class="font-bold text-xs text-slate-300">سياسة أمان البيانات النشطة (PostgreSQL)</span>
+                    </div>
+                    <div class="bg-slate-950 p-4 rounded-lg font-mono text-[10px] text-slate-400 space-y-2 leading-relaxed">
+                        <p class="text-purple-400">// تفعيل أمن الصفوف للجرد الدوري</p>
+                        <p>ALTER TABLE inventory_audits ENABLE ROW LEVEL SECURITY;</p>
+                        <p class="text-purple-400">// سياسة عزل الفروع</p>
+                        <p>CREATE POLICY "Branch Isolation" ON inventory_audits</p>
+                        <p>  FOR SELECT USING (location_id = auth.user_branch);</p>
+                    </div>
+                    <div class="text-slate-400 text-xs font-semibold text-center">
+                        🛡️ بيانات الفروع محمية ومقيدة ومحجوبة برمجياً بنسبة 100%.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: ROI & The Ask -->
+        <div class="slide flex flex-col lg:flex-row gap-6 h-full items-center justify-center" data-index="6">
+            <!-- Left Pane -->
+            <div class="w-full lg:w-1/2 h-full flex flex-col justify-center space-y-6 lg:pr-8">
+                <div class="bg-rose-500/10 text-rose-300 border border-rose-500/20 px-4 py-2 rounded-xl text-xs font-bold w-fit">
+                    💰 القيمة المالية المضافة للمشروع
+                </div>
+                
+                <div class="space-y-2">
+                    <h2 class="text-3xl font-black text-white leading-tight">العائد المادي والمطالبة العادلة</h2>
+                    <p class="text-slate-400 text-xs font-medium">تحدث بنبرة هادئة ومتزنة وبكل ثقة، واقترب برفق للأمام خطوة.</p>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl space-y-4 highlight-box">
+                    <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-widest">السيناريو المقروء (ما ستقوله):</h3>
+                    <p class="text-slate-200 text-base md:text-lg leading-relaxed font-bold">
+                        "يا فندم، لو تعاقدنا مع شركة برمجيات خارجية لتنفيذ نظام WMS مخصص بالربط ده، 
+                        التكلفة كانت هتوصل لحوالي 150,000 جنيه كحد أدنى، غير اشتراكات الربط السنوية.
+                        أنا صممت ونفذت السيستم ده بالكامل لشركتنا عشان يكون ملكاً لـ TREE بنسبة 100% ومجاناً مدى الحياة.
+                        وطالما السيستم أثبت كفاءته وهيحمي أرباح الفروع ويوفر وقت العمليات، 
+                        أنا حابب إننا نناقش خطة ترقيتي لقيادة العمليات التقنية واللوجستية بالشركة (Technical Operations Lead)، 
+                        مع تعديل لراتبي بما يناسب التوفير المالي والقيمة الكبيرة اللي بيقدمها النظام ده للشركة."
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 text-xs text-slate-400 space-y-1">
+                    <span class="font-bold text-purple-400">💡 حركة جسدك:</span> انهِ العرض بثقة عالية، انظر له مباشرة، وانتظر رده بهدوء دون تردد.
+                </div>
+            </div>
+            
+            <!-- Right Pane: Financial Savings Mockup -->
+            <div class="w-full lg:w-1/2 h-full flex items-center justify-center p-4">
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full max-w-md shadow-2xl space-y-4">
+                    <h4 class="font-bold text-xs text-slate-300 border-b border-slate-800 pb-2">دراسة توفير التكاليف للشركة (ROI)</h4>
+                    <div class="space-y-2 text-xs">
+                        <div class="flex justify-between p-3 bg-slate-950 rounded-lg">
+                            <span class="text-slate-400">تكلفة التطوير الخارجي (مستبعدة):</span>
+                            <span class="text-rose-400 font-extrabold">- 150,000 ج.م</span>
+                        </div>
+                        <div class="flex justify-between p-3 bg-slate-950 rounded-lg">
+                            <span class="text-slate-400">اشتراكات الأنظمة السنوية (تم توفيرها):</span>
+                            <span class="text-rose-400 font-extrabold">- 40,000 ج.م / سنوياً</span>
+                        </div>
+                        <div class="flex justify-between p-3 bg-emerald-950/30 rounded-lg border border-emerald-500/20">
+                            <span class="text-emerald-400 font-bold">التكلفة الفعلية لـ TREE حالياً:</span>
+                            <span class="text-emerald-400 font-black">0.00 ج.م ✅</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Bottom Controls -->
+    <footer class="flex items-center justify-between border-t border-slate-800 pt-4 z-50">
+        <button id="prev-btn" onclick="prevSlide()" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl transition disabled:opacity-30 disabled:pointer-events-none" disabled>
+            السابق
+        </button>
+        
+        <div class="text-[10px] text-slate-500 font-bold hidden md:block">
+            يمكنك استخدام الأسهم (◄ / ►) أو المسافة (Space) للتنقل بين السلايدات
+        </div>
+
+        <button id="next-btn" onclick="nextSlide()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition shadow-lg shadow-emerald-900/30">
+            التالي
+        </button>
+    </footer>
+
+    <!-- Interactive Navigation Logic -->
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 6;
+
+        function updateProgress() {
+            const progress = (currentSlide / totalSlides) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            document.getElementById('slide-index').textContent = `${currentSlide} / ${totalSlides}`;
+            
+            // Disable/Enable buttons
+            document.getElementById('prev-btn').disabled = (currentSlide === 1);
+            document.getElementById('next-btn').textContent = (currentSlide === totalSlides) ? 'إنهاء العرض' : 'التالي';
         }
 
-        // =====================================================================
-        // PHASE 3: INTELLIGENT ALGORITHMS (خوارزميات النواقص والراكد)
-        // =====================================================================
-        let branchStock = 2; // كمية تجريبية أقل من حد الأمان
-        let abeesStock = 50; // رصيد المستودع الرئيسي
-
-        if (branchStock < 3 && abeesStock > 0) {
-            showSlide("Smart Replenishment & Dead Stock Analyzer");
-            say(`
-                تاني جزء هو الخوارزميات الذكية للتحكم في حركة البضاعة.
-                السيستم بيراقب أرصدة الفروع لحظياً، لو منتج قل عن حد الأمان (3 قطع) 
-                وهو متوفر في أبيس، السيستم بيبعت تنبيه فوري واقتراح تحويل سريع. 
-                وده معناه إن مفيش عميل هيدخل فرع لـ TREE ويسمع كلمة 'القطعة مش موجودة'.
-                ده غير خوارزمية البضاعة الراكدة (Dead Stock) اللي بتكشف القطع اللي ما بتتباعش 
-                في الفروع عشان نسحبها فوراً ونعيد تشغيل الكاش فلو المركون.
-            `);
+        function showSlideIndex(index) {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(slide => {
+                const slideIdx = parseInt(slide.getAttribute('data-index'));
+                slide.classList.remove('active', 'past');
+                
+                if (slideIdx === index) {
+                    slide.classList.add('active');
+                } else if (slideIdx < index) {
+                    slide.classList.add('past');
+                }
+            });
         }
 
-        // =====================================================================
-        // PHASE 4: LIVE DEMO (العرض العملي اللحظي للجرد)
-        // =====================================================================
-        const isLiveDemoSuccess = await runLiveAuditDemo();
-
-        if (isLiveDemoSuccess) {
-            say(`
-                وده يا فندم أهم جزء في السيستم: نظام الجرد والمطابقة اللحظي. 
-                الموظف بيمسح الباركود، والسيستم بيحفظ مسودة تلقائياً كل ثانيتين في السحاب. 
-                وبمجرد إرسال الجرد، النظام بيقوم بعملية حسابية لمطابقة الكميات الفعلية 
-                بالأرصدة المسجلة ويستخرج تقرير الفروقات (عجز وزيادة) فوراً. 
-                حضرتك كإدارة بضغطة زر بتعتمد التسوية وتحدث المخزون الفعلي، 
-                وده بيقفل الباب تماماً أمام أي عجز مخازن أو تلاعب.
-            `);
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                showSlideIndex(currentSlide);
+                updateProgress();
+            } else {
+                alert("🎉 بالتوفيق في العرض يا صاحبي! إن شاء الله الترقية والمكافأة من نصيبك!");
+            }
         }
 
-        // =====================================================================
-        // PHASE 5: ROI EVALUATION & THE ASK (حساب الأرباح والطلب المالي)
-        // =====================================================================
-        const customSoftwareCost = 150000; // تكلفة تقديرية للبرمجة الخارجية بالجنيه
-        const saasSubscriptions = 50000; // تكلفة سنوية للاشتراكات الجاهزة
+        function prevSlide() {
+            if (currentSlide > 1) {
+                currentSlide--;
+                showSlideIndex(currentSlide);
+                updateProgress();
+            }
+        }
 
-        say(`
-            لو إحنا روحنا لشركة برمجيات خاصة عشان تبرمج لـ TREE سيستم مخصص بالربط ده، 
-            التكلفة كانت هتوصل لـ ${customSoftwareCost.toLocaleString()} جنيه كحد أدنى، 
-            ده غير اشتراكات الربط السنوية اللي هتوفرها الشركة. 
-            أنا صممت السيستم ده تمليك كامل ومجاني للشركة لأن TREE بتكبر وإحنا لازم نكبر معاها.
-        `);
-
-        // استدعاء دالة طلب الترقية وزيادة الراتب
-        const salaryAdjustment = await requestPromotion({
-            requestedRole: "IT & WMS Technical Operations Lead",
-            reason: "Built proprietary technology asset saving the company major software costs and inventory losses"
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
         });
-
-        return salaryAdjustment;
-
-    } catch (objections) {
-        // معالجة الاعتراضات أو الأسئلة الفنية
-        handleObjections(objections);
-    }
-}
-
-// دالة المحاكاة للجرد العملي أمام رئيس مجلس الإدارة
-async function runLiveAuditDemo() {
-    // 1. امسك موبايلك وافتح الكاميرا أو واجهة الجرد
-    // 2. امسح باركود منتج حقيقي لـ TREE
-    // 3. وريه إزاي الاسم والعدد ظهروا فوراً
-    return true;
-}
-
-// دالة الرد على أسئلة رئيس مجلس الإدارة
-function handleObjections(question) {
-    switch(question.type) {
-        case "security_concern":
-            say("السيستم محمي بالكامل بتقنيات Supabase RLS، ولا يمكن لموظف فرع تعديل أو قراءة بيانات فرع آخر.");
-            break;
-        case "technical_cost":
-            say("السيستم مبني على قواعد بيانات خفيفة واشتراكها السحابي مجاني بالكامل في حدود حجم شغلنا الحالي.");
-            break;
-        default:
-            say("السيستم مصمم للتوسع ويدعم إضافة فروع ومخازن جديدة في ثواني بدون إعادة برمجة.");
-    }
-}
+    </script>
+</body>
+</html>
